@@ -41,4 +41,51 @@
 
 #include <iostream>
 using namespace std;
-
+int getsum(int arr[], int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
+double getAverage(int arr[], int n) {
+    return (double)getsum(arr, n) / n;
+}
+int getMax(int arr[], int n) {
+    int max = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+int getMin(int arr[], int n) {
+    int min = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        }
+    }
+    return min;
+}
+int main() {
+    int n;
+    count << "How many numbers? ";
+    cin >> n;
+    if (n <= 0) {
+        count << "Error: Number og values must be positive." << endl;
+        return 0;
+    }
+    int arr[100];
+    for (int i = 0; i < n; i++) {
+        cout << "Enter number " << (i + 1) << ": ";
+        cin >> arr[i];
+    }
+    cout << "\nResults:" << endl;
+    cout << "Sum:     " << getsum(arr, n) << endl;
+    cout << "Average: " << getAverage(arr, n) << endl;
+    cout << "Maximum: " << getMax(arr, n) << endl;
+    cout << "Minimum: " << getMin(arr, n) << endl;
+    return 0;
+}
