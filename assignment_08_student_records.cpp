@@ -82,4 +82,96 @@
 #include <string>
 #include <iomanip>
 using namespace std;
-
+struct Student {
+    string name;
+    int id;
+    vector<double> scores;
+};
+vector<Student> students;
+double calculateAverage(const vector<double>& scores) {
+    if (scores.empty()) return 0.0;
+    double sum = 0.0;
+    for (double score : scores) {
+        sum += score;
+    }
+    return sum / scores.size();
+}
+void addStudent() {
+    Student newStudent;
+    cout << "Student name: ";
+    cin.ignore(); // Clear the input buffer
+    getline(cin, newStudent.name);
+    cout << "Student ID: ";
+    cin >> newStudent.id;
+    int numScores;
+    cout << "How many scores? ";
+    cin >> numScores;
+    newStudent.scores.resize(numScores);
+    for (int i = 0; i < numScores; ++i) {
+        double score;
+        cout << "Enter score " << (i + 1) << ": ";
+        cin >> newStudent.scores[i];
+    }
+    students.push_back(newStudent);
+    cout << "Student \"" << newStudent.name << "\" added successfully." << endl;
+}
+void displayAllStudents() {
+    if (students.empty()) {
+        cout << "No students have been added yet." << endl;
+        return;
+    }
+    cout << left << setw(20) << "Name" << setw(12) << "ID" << setw(25) << "Scores" <<setw(10) << "Average" << endl;
+   count << "===============================" << endl;
+    for (const Student& student : students) {
+        cout << left << setw(20) << student.name
+             << setw(12) << student.id
+             << setw(25);
+        for (double score : student.scores) {
+            cout << score << " ";
+        }
+        cout << setw(10) << fixed << setprecision(2) << calculateAverage(student.scores) << endl;
+    }
+}
+void calculateAverageScore() {
+    int searchId;
+    cout << "Enter student ID: ";
+    cin >> searchId;
+    for (const Student& student : students) {
+        if (student.id == searchId) {
+            double avg = calculateAverage(student.scores);
+            cout << student.name << "'s average score: " << fixed << setprecision(2) << avg << endl;
+            return;
+        }
+    }
+    cout << "Error: student with ID " << searchId << " not found." << endl;
+}
+void displayMenu() {
+    cout << "===============================" << endl;
+    cout << "   STUDENT RECORD SYSTEM MENU" << endl;
+    cout << "===============================" << endl;
+    cout << "1. Add student" << endl;
+    cout << "2. Display all students" << endl;
+    cout << "3. Calculate average score" << endl;
+    cout << "4. Quit" << endl;
+    cout << "Enter your choice (1-4): ";
+}
+int main() {
+    int choice;
+    while (true) {
+        displayMenu();
+        cin >> choice;
+        if (choice == 1) {
+            addStudent();
+        } else if (choice == 2) {
+            displayAllStudents();
+        } else if (choice == 3) {
+            calculateAverageScore();
+        } else if (choice == 4) {
+            cout << "Exiting the program." << endl;
+            break;
+        } else {
+            cout << "Invalid choice. Please enter a number between 1 and 4." << endl;
+        }
+    } 
+    return 0;
+}
